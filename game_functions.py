@@ -46,9 +46,12 @@ def get_number_of_aliens(settings,alien_width):
 
 def get_number_rows(settings, alien_height, ship_height):
     available_space_y = settings.screenHeight - 6 * alien_height - ship_height
-    number_of_rows = int(available_space_y / (2 * alien_height))
+    number_of_rows = int(available_space_y / (2.5 * alien_height))
     return number_of_rows
 
+def number_of_aliens(settings, alien_height, alien_width, ship_height):
+    number_of_actual_aliens = get_number_rows(settings, alien_height, ship_height) * get_number_of_aliens(settings, alien_width)
+    return number_of_actual_aliens
 
 def create_alien(settings,screen, aliens, alien_number, row_number):
     """create an alien and place it on a row"""
@@ -61,6 +64,8 @@ def create_alien(settings,screen, aliens, alien_number, row_number):
     aliens.add(alien)
 
 
+
+
 def check_collision(bullets,aliens):
     pygame.sprite.groupcollide(bullets, aliens, True, True)
 
@@ -70,23 +75,21 @@ def check_collision(bullets,aliens):
 def update_screen(settings,screen,ship, bullets, alien):
     #color the screen with bg color
     screen.fill(settings.bg_color)
+    # draw bullet
+    for bullet in bullets.sprites():
+        bullet.draw_bu()
+        bullet.update()
+
+    alien.draw(screen)
+    # draw alien fleet
+    alien.update()
+
     #update ship
     ship.update()
     #draw ship
     ship.blitme()
-    #draw bullet
-    for bullet in bullets.sprites():
-        bullet.draw_bu()
-    # draw alien fleet
-    alien.update()
 
-    alien.draw(screen)
     check_collision(bullets,alien)
-
-    #number_of_aliens = get_number_of_aliens(settings, alien.rect.width)
-    #number_of_rows = get_number_rows(settings, alien.rect.height, ship.rect.height)
-
-    #print(number_of_aliens * number_of_rows)
 
     #update display
     pygame.display.flip()

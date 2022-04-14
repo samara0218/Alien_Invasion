@@ -14,7 +14,7 @@ class Alien(Sprite):
         self.settings = settings
 
         #create alien image (from pixabay.com) as rectangle
-        self.image = pygame.image.load('images/alien.png')
+        self.image = pygame.image.load('images/mario_PNG.png')
         #scales the alien
         self.image = pygame.transform.scale(self.image, (45, 35))
         # makes image a square
@@ -56,17 +56,10 @@ class Alien(Sprite):
 
     def update(self):
         """moves alien"""
-        if self.check_screen() == True:
-            self.direction *= -1
-            self.y += 50
-        self.x += self.speed * self.direction
-        self.rect.x = self.x
-        self.rect.y = self.rect.y
-
-
-
-
-
+        self.rect.x = float(self.rect.x + self.speed)
+        if self.rect.left < 0 or self.rect.right > 1100:
+            self.speed = -self.speed
+            self.rect.y += 35
 
 #function to move the aliens back and forth
 
