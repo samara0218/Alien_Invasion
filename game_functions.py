@@ -69,6 +69,7 @@ def create_alien(settings,screen, aliens, alien_number, row_number):
 def check_collision(bullets,aliens):
     pygame.sprite.groupcollide(bullets, aliens, True, True)
 
+
 #def update_fleet():
 
 
@@ -79,6 +80,8 @@ def update_screen(settings,screen,ship, bullets, alien):
     for bullet in bullets.sprites():
         bullet.draw_bu()
         bullet.update()
+
+
 
     alien.draw(screen)
     # draw alien fleet
@@ -107,8 +110,9 @@ def keydown_evt(event, settings, screen, bullets, ship):
         ship.moving_down = True
     #if the space bar is pressed a new bullet is created and added to the group
     if event.key == pygame.K_SPACE:
-        new_bu = Bullets(settings,screen,ship)
-        bullets.add(new_bu)
+        if len(bullets) <= settings.bu_limit:
+            new_bu = Bullets(settings,screen,ship)
+            bullets.add(new_bu)
 
 def keyup_evt(event,ship):
     # if a key is not pressed the moving flag is set to false

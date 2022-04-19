@@ -13,6 +13,7 @@ class Settings():
         self.bu_width = 3
         self.bu_height = 10
         self.bu_color = (255,255,255)
+        self.bu_limit = 2
     #player settings
         self.lives = 3
         self.score = 0

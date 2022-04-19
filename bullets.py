@@ -24,10 +24,21 @@ class Bullets(Sprite):
 
     def update(self):
         #sets the speed and updates the position of the bullet
-        self.y -= self.speed
-        self.rect.y = self.y
+        if self.on_screen() == True:
+            self.kill()
+
+        else:
+            self.y -= self.speed
+            self.rect.y = self.y
 
     def draw_bu(self):
         #draws bullet as a rectangle using the previous settings
         pygame.draw.rect(self.screen,self.color,self.rect)
+
+    def on_screen(self):
+        if self.rect.y < 0:
+            return True
+        else:
+            return False
+
 
