@@ -1,4 +1,6 @@
 #Samara Sherven 3/29/22
+import pygame
+
 
 class Settings():
 # Class to store all settings for Alien Invasion
@@ -17,6 +19,13 @@ class Settings():
     #player settings
         self.lives = 3
         self.score = 0
+
+        self.fleet_lim = 0
+
+        self.font = pygame.font.SysFont("Times New Roman", 25, True, False)
+
+
+
 
 
 

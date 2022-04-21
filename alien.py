@@ -39,6 +39,7 @@ class Alien(Sprite):
         self.alien_right = True
         self.alien_left = False
 
+        self.alien_down = 35
 
 
     def blitme(self):
@@ -59,7 +60,7 @@ class Alien(Sprite):
         self.rect.x = float(self.rect.x + self.speed)
         if self.rect.left < 0 or self.rect.right > 1100:
             self.speed = -self.speed
-            self.rect.y += 35
+            self.rect.y += self.alien_down
 
 #function to move the aliens back and forth
 

@@ -3,7 +3,6 @@
 import pygame
 import sys
 
-import settings
 from bullets import Bullets
 from alien import Alien
 
@@ -63,25 +62,62 @@ def create_alien(settings,screen, aliens, alien_number, row_number):
 
     aliens.add(alien)
 
+def check_fleet(aliens,settings):
+    if len(aliens) == 0:
+        #settings.score += 20
+        settings.fleet_lim += 1
 
+        return True
+    else:
+        return False
 
+def game_end(settings):
+    if settings.fleet_lim == 3:
+        print("You are superior congrats")
+        print("Your score was " + str(settings.score))
+        return True
+    elif settings.lives == 0:
+        print("You died lol imagine")
+        print("Your score was " + str(settings.score))
+        return True
+    else:
+        return False
 
-def check_collision(bullets,aliens):
-    pygame.sprite.groupcollide(bullets, aliens, True, True)
+def close_game(settings):
+    if game_end(settings) == True:
+        SystemExit
+def check_collision(bullets,aliens, settings):
+    if pygame.sprite.groupcollide(bullets, aliens, True, True):
+        settings.score += 1
 
+def check_ship(ship, settings, aliens):
+    for alien in aliens:
+        if alien.rect.bottomleft == ship.rect.topleft:
+            for alien in aliens:
+                alien.kill()
+            settings.lives -= 1
+            #settings.score -= 20
+            return True
 
-#def update_fleet():
+def print_text(settings,screen):
+    surface = settings.font.render("Score: " + str(settings.score), True, (0,255,0))
+    screen.blit(surface, (50,540))
+    surface2 = settings.font.render("Lives: " + str(settings.lives), True, (0, 255, 0))
+    screen.blit(surface2, (50, 565))
 
 
 def update_screen(settings,screen,ship, bullets, alien):
     #color the screen with bg color
+    check_ship(ship,settings,alien)
     screen.fill(settings.bg_color)
     # draw bullet
+    #check_ship(ship,alien,settings)
     for bullet in bullets.sprites():
         bullet.draw_bu()
         bullet.update()
 
-
+    if (check_fleet(alien,settings) == True or check_ship(ship,settings,alien) == True) and game_end(settings) == False:
+        create_fleet(settings,screen,alien,ship)
 
     alien.draw(screen)
     # draw alien fleet
@@ -92,10 +128,11 @@ def update_screen(settings,screen,ship, bullets, alien):
     #draw ship
     ship.blitme()
 
-    check_collision(bullets,alien)
-
+    check_collision(bullets,alien, settings)
+    print_text(settings, screen)
     #update display
     pygame.display.flip()
+
 
 
 def keydown_evt(event, settings, screen, bullets, ship):

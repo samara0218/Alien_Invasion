@@ -19,6 +19,10 @@ def alien_invasion():
     settings = Settings()
     screen = pygame.display.set_mode((settings.screenWidth, settings.screenHeight))
     pygame.display.set_caption('Alien Invasion')
+    green = (0, 255, 0)
+    blue = (0, 0, 128)
+    font = pygame.font.Font('freesansbold.ttf', 32)
+
     #add ship
     ship = Ship(screen)
 
@@ -26,6 +30,10 @@ def alien_invasion():
 
     #make a group to store bullets
     bullets = Group()
+
+    text = font.render('score is: ' + str(settings.score), True, green, blue)
+    textRect = text.get_rect()
+    textRect.center = (80 // 2, 100 // 2)
 
     # draws tha alien fleet
     gf.create_fleet(settings, screen, aliens, ship)
@@ -36,11 +44,14 @@ def alien_invasion():
         gf.check_events(ship, settings ,screen,bullets)
 
         #print(len(aliens))
-        print(len(bullets))
+        #print(len(bullets))
         gf.update_screen(settings,screen,ship, bullets, aliens)
+        gf.close_game(settings)
+        screen.blit(text, textRect)
 
 
 #runs game
 alien_invasion()
+print(Settings.score)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
