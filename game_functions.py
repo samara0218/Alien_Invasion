@@ -85,7 +85,8 @@ def game_end(settings):
 
 def close_game(settings):
     if game_end(settings) == True:
-        SystemExit
+        sys.exit()
+
 def check_collision(bullets,aliens, settings):
     if pygame.sprite.groupcollide(bullets, aliens, True, True):
         settings.score += 1
@@ -104,7 +105,8 @@ def print_text(settings,screen):
     screen.blit(surface, (50,540))
     surface2 = settings.font.render("Lives: " + str(settings.lives), True, (0, 255, 0))
     screen.blit(surface2, (50, 565))
-
+    #surface3 = settings.font.render("Iteration: " + str(settings.fleet_lim), True, (0, 255, 0))
+    #screen.blit(surface3, (50, 515))
 
 def update_screen(settings,screen,ship, bullets, alien):
     #color the screen with bg color
